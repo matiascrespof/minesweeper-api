@@ -22,4 +22,15 @@ public interface GameBoardHandler {
 	 * @throws Exception
 	 */
 	public boolean hasABomb(GameBoard game, int row, int column) throws Exception;
+	
+	/**
+	 * Limit the access to discover a bomb for a Game Board
+	 * 
+	 * @param game
+	 * @param row
+	 * @param column
+	 * @return
+	 * @throws Exception
+	 */
+	public GameBoard revealPosition(GameBoard game, int row, int column) throws Exception;
 }

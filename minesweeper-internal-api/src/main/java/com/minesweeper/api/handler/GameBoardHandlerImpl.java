@@ -1,5 +1,9 @@
 package com.minesweeper.api.handler;
 
+import javax.xml.bind.ValidationException;
+
+import com.minesweeper.api.utils.GameStatus;
+
 /**
  * 
  * @author matias
@@ -80,8 +84,39 @@ public class GameBoardHandlerImpl implements GameBoardHandler {
 		try {
 			isABomb = game.getSquares()[column][row].hasAbomb();
 		} catch (Exception e) {
-			throw new Exception("Not valid configuration!");
+			throw new Exception("Not position!");
 		}
 		return isABomb;
 	}
+
+	@Override
+	public GameBoard revealPosition(GameBoard game, int row, int column) throws Exception {
+		//TODO clean up this code a little bit
+		boolean isABomb = false;
+		try {
+			startGameIfNotStarted(game);
+			// First check if has a Bomb
+			isABomb = this.hasABomb(game, row, column);
+			if (isABomb) {
+				game.endFailedGame();
+			}else {
+				
+			}
+		} catch (Exception ex) {
+			throw ex;
+		}
+		return game;
+	}
+
+	private void startGameIfNotStarted(GameBoard game) throws ValidationException {
+		String gameStatus = game.getGameStatus().toString();
+		if (gameStatus.toString().equals(GameStatus.FINISHED_LOOSE.toString())
+				|| gameStatus.toString().equals(GameStatus.FINISHED_WON.toString())) {
+			throw new ValidationException("The game is not in progress");
+		} else if (gameStatus.equals(GameStatus.PAUSED.toString())) {
+			game.startGame();
+		}
+
+	}
+
 }
