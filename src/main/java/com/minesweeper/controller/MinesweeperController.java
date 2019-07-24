@@ -28,7 +28,7 @@ public class MinesweeperController {
 	 * @param cpp
 	 * @return
 	 */
-	@RequestMapping(value = "/game/startNewGame", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/game/startNewGame", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<GameSession> startNewGame() {
 		GameSession sessionGame = null;
 		HttpStatus status = HttpStatus.OK;
@@ -49,6 +49,20 @@ public class MinesweeperController {
 		logger.info("Getting Game with ID:", gameId);
 		try {
 			sessionGame = gameService.getGame(gameId);
+		} catch (Exception e) {
+			logger.error("Error getting Game with ID:", gameId);
+			status = HttpStatus.NOT_FOUND;
+		}
+		return new ResponseEntity<GameSession>(sessionGame, status);
+	}
+	
+	@RequestMapping(value = "/game/revealSquare", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<GameSession> revealSquare(@RequestParam String gameId, @RequestParam int rowP, @RequestParam int columnP) {
+		GameSession sessionGame = null;
+		HttpStatus status = HttpStatus.OK;
+		logger.info("Getting Game with ID:", gameId);
+		try {
+			sessionGame = gameService.revealPosition(gameId, rowP, columnP);
 		} catch (Exception e) {
 			logger.error("Error getting Game with ID:", gameId);
 			status = HttpStatus.NOT_FOUND;
