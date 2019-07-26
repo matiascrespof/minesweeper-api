@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.minesweeper.domain.GameSession;
+import com.minesweeper.domain.GameSessionMove;
 import com.minesweeper.domain.User;
 import com.minesweeper.service.GameService;
 
@@ -28,6 +31,7 @@ public class MinesweeperController {
 	 * @param cpp
 	 * @return
 	 */
+	@CrossOrigin(origins="*")
 	@RequestMapping(value = "/game/startNewGame", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<GameSession> startNewGame() {
 		GameSession sessionGame = null;
@@ -41,9 +45,9 @@ public class MinesweeperController {
 		}
 		return new ResponseEntity<GameSession>(sessionGame, status);
 	}
-
-	@RequestMapping(value = "/game/getGame", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<GameSession> getGame(@RequestParam String gameId) {
+	@CrossOrigin(origins="*")
+	@RequestMapping(value = "/game/getGame/{gameId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<GameSession> getGame(@PathVariable("gameId") String gameId) {
 		GameSession sessionGame = null;
 		HttpStatus status = HttpStatus.OK;
 		logger.info("Getting Game with ID:", gameId);
@@ -55,16 +59,19 @@ public class MinesweeperController {
 		}
 		return new ResponseEntity<GameSession>(sessionGame, status);
 	}
-	
+	//TODO create an object to return in the body like this 
+	//@RequestBody GameSessionMove gameMove)
+	// for now use get is enought for testing client and back side
+	@CrossOrigin(origins="*")
 	@RequestMapping(value = "/game/revealSquare", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<GameSession> revealSquare(@RequestParam String gameId, @RequestParam int rowP, @RequestParam int columnP) {
+	public ResponseEntity<GameSession> revealSquare(@RequestBody GameSessionMove gameMove) {
 		GameSession sessionGame = null;
 		HttpStatus status = HttpStatus.OK;
-		logger.info("Getting Game with ID:", gameId);
+		logger.info("Getting Game with ID:", gameMove.getGameId());
 		try {
-			sessionGame = gameService.revealPosition(gameId, rowP, columnP);
+			sessionGame = gameService.revealPosition(gameMove.getGameId(), gameMove.getRowP(), gameMove.getColumP());
 		} catch (Exception e) {
-			logger.error("Error getting Game with ID:", gameId);
+			logger.error("Error getting Game with ID:",  gameMove.getGameId());
 			status = HttpStatus.NOT_FOUND;
 		}
 		return new ResponseEntity<GameSession>(sessionGame, status);

@@ -32,13 +32,16 @@ public class GameService {
 		minesweeperRepository.saveSessionGame(gameSession);
 		return gameSession;
 	};
-	
+
 	public GameSession getGame(String gameId) throws Exception {
 		return minesweeperRepository.getSessionGame(gameId);
 	};
-	
+
 	public GameSession revealPosition(String gameId, int rowP, int columnP) throws Exception {
 		GameSession gameSession = minesweeperRepository.getSessionGame(gameId);
+		GameBoard board = boardHandler.revealPosition(gameSession.getGameBoard(), rowP, columnP);
+		gameSession.setGameBoard(board);
+		minesweeperRepository.saveSessionGame(gameSession);
 		return gameSession;
 	};
 

@@ -100,7 +100,7 @@ public class GameBoardHandlerImpl implements GameBoardHandler {
 			if (isABomb) {
 				game.endFailedGame();
 			}else {
-				
+				game.getSquares()[column][row].setOpened(true);
 			}
 		} catch (Exception ex) {
 			throw ex;

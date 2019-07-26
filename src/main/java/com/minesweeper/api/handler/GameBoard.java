@@ -116,7 +116,7 @@ public class GameBoard {
 	 * evaluate number of bombs close to
 	 */
 	private void evaluateBombsCloseTo() {
-		Arrays.stream(squares).forEach(sqy -> Arrays.stream(sqy).forEach(sq -> evaluateNeighbors(sq)));
+		Arrays.stream(squares).parallel().forEach(sqy -> Arrays.stream(sqy).parallel().forEach(sq -> evaluateNeighbors(sq)));
 	}
 
 	/**
