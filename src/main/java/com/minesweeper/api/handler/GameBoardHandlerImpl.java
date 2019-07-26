@@ -3,6 +3,7 @@ package com.minesweeper.api.handler;
 import javax.xml.bind.ValidationException;
 
 import com.minesweeper.api.utils.GameStatus;
+import com.minesweeper.domain.GameBoard;
 
 /**
  * 

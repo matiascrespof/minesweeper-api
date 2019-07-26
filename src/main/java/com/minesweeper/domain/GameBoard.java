@@ -1,4 +1,4 @@
-package com.minesweeper.api.handler;
+package com.minesweeper.domain;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
@@ -29,7 +29,7 @@ public class GameBoard {
 	 * 
 	 * @param user
 	 */
-	protected GameBoard(int rows, int columns, int nMines) {
+	public GameBoard(int rows, int columns, int nMines) {
 		this.gameStatus = GameStatus.PAUSED.toString();
 		this.startDate = new Date();
 		this.nRows = rows - 1;

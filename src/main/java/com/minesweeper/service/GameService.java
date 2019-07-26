@@ -5,9 +5,9 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.minesweeper.api.handler.GameBoard;
 import com.minesweeper.api.handler.GameBoardHandler;
 import com.minesweeper.api.handler.GameBoardHandlerImpl;
+import com.minesweeper.domain.GameBoard;
 import com.minesweeper.domain.GameSession;
 import com.minesweeper.domain.User;
 import com.minesweeper.helpers.RandomIdGenerator;

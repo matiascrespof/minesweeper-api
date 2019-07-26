@@ -59,9 +59,7 @@ public class MinesweeperController {
 		}
 		return new ResponseEntity<GameSession>(sessionGame, status);
 	}
-	//TODO create an object to return in the body like this 
-	//@RequestBody GameSessionMove gameMove)
-	// for now use get is enought for testing client and back side
+
 	@CrossOrigin(origins="*")
 	@RequestMapping(value = "/game/revealSquare", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<GameSession> revealSquare(@RequestBody GameSessionMove gameMove) {

@@ -1,5 +1,7 @@
 package com.minesweeper.api.handler;
 
+import com.minesweeper.domain.GameBoard;
+
 public interface GameBoardHandler {
 
 	public GameBoard startNewBegginerBoard() throws Exception;

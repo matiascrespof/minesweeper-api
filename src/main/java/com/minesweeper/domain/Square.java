@@ -1,4 +1,6 @@
-package com.minesweeper.api.handler;
+package com.minesweeper.domain;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * 
@@ -61,11 +63,12 @@ public class Square {
 		this.cPosition = cPosition;
 	}
 
-	protected void setHasAbomb(boolean hasAbomb) {
+	public void setHasAbomb(boolean hasAbomb) {
 		this.hasAbomb = hasAbomb;
 	}
 	
-	protected boolean hasAbomb() {
+	@JsonIgnore
+	public boolean hasAbomb() {
 		return hasAbomb;
 	}
     

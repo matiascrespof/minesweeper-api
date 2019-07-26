@@ -1,7 +1,5 @@
 package com.minesweeper.domain;
 
-import com.minesweeper.api.handler.GameBoard;
-
 public class GameSession {
 	
 	String gameId;
