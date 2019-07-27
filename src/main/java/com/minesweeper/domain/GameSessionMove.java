@@ -3,12 +3,12 @@ package com.minesweeper.domain;
 public class GameSessionMove {
 	String gameId;
 	int rowP;
-	int columP;
+	int columnP;
 	
-	public GameSessionMove(String gameId, int rowP, int columP) {
+	public GameSessionMove(String gameId, int rowP, int columnP) {
 		this.gameId = gameId;
 		this.rowP = rowP;
-		this.columP = columP;
+		this.columnP = columnP;
 	}
 	public String getGameId() {
 		return gameId;
@@ -23,10 +23,10 @@ public class GameSessionMove {
 		this.rowP = rowP;
 	}
 	public int getColumP() {
-		return columP;
+		return columnP;
 	}
-	public void setColumP(int columP) {
-		this.columP = columP;
+	public void setColumP(int columnP) {
+		this.columnP = columnP;
 	}
 	
 	

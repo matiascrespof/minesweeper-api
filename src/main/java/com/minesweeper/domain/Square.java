@@ -8,19 +8,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  *
  */
 public class Square {
-    boolean hasAbomb;
-    int rPosition;
-    int cPosition;
-    int bombsCloseTo;
-    boolean opened;
-    boolean marked;
-    
-	protected Square(int rPosition, int cPosition, boolean hasAbomb) {
+	boolean hasAbomb;
+	int rPosition;
+	int cPosition;
+	int bombsCloseTo;
+	boolean opened;
+	boolean marked;
+
+	public Square(int cPosition, int rPosition, boolean hasAbomb) {
 		this.hasAbomb = hasAbomb;
 		this.opened = false;
 		this.marked = false;
-		this.rPosition = rPosition;
 		this.cPosition = cPosition;
+		this.rPosition = rPosition;
 	}
 
 	public boolean isMarked() {
@@ -42,11 +42,11 @@ public class Square {
 	public boolean isOpened() {
 		return opened;
 	}
-	
+
 	public void setOpened(boolean opened) {
 		this.opened = opened;
 	}
-	
+
 	public int getrPosition() {
 		return rPosition;
 	}
@@ -66,10 +66,10 @@ public class Square {
 	public void setHasAbomb(boolean hasAbomb) {
 		this.hasAbomb = hasAbomb;
 	}
-	
+
 	@JsonIgnore
-	public boolean hasAbomb() {
+	public boolean isHasAbomb() {
 		return hasAbomb;
 	}
-    
+
 }

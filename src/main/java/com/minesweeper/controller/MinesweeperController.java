@@ -31,7 +31,7 @@ public class MinesweeperController {
 	 * @param cpp
 	 * @return
 	 */
-	@CrossOrigin(origins="*")
+	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/game/startNewGame", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<GameSession> startNewGame() {
 		GameSession sessionGame = null;
@@ -45,7 +45,8 @@ public class MinesweeperController {
 		}
 		return new ResponseEntity<GameSession>(sessionGame, status);
 	}
-	@CrossOrigin(origins="*")
+
+	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/game/getGame/{gameId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<GameSession> getGame(@PathVariable("gameId") String gameId) {
 		GameSession sessionGame = null;
@@ -60,7 +61,7 @@ public class MinesweeperController {
 		return new ResponseEntity<GameSession>(sessionGame, status);
 	}
 
-	@CrossOrigin(origins="*")
+	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/game/revealSquare", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<GameSession> revealSquare(@RequestBody GameSessionMove gameMove) {
 		GameSession sessionGame = null;
@@ -69,10 +70,25 @@ public class MinesweeperController {
 		try {
 			sessionGame = gameService.revealPosition(gameMove.getGameId(), gameMove.getRowP(), gameMove.getColumP());
 		} catch (Exception e) {
-			logger.error("Error getting Game with ID:",  gameMove.getGameId());
+			logger.error("Error getting Game with ID:", gameMove.getGameId(), e);
 			status = HttpStatus.NOT_FOUND;
 		}
 		return new ResponseEntity<GameSession>(sessionGame, status);
 	}
 	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value = "/game/flagSquare", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<GameSession> flagSquare(@RequestBody GameSessionMove gameMove) {
+		GameSession sessionGame = null;
+		HttpStatus status = HttpStatus.OK;
+		logger.info("Getting Game with ID:", gameMove.getGameId());
+		try {
+			sessionGame = gameService.revealPosition(gameMove.getGameId(), gameMove.getRowP(), gameMove.getColumP());
+		} catch (Exception e) {
+			logger.error("Error getting Game with ID:", gameMove.getGameId(), e);
+			status = HttpStatus.NOT_FOUND;
+		}
+		return new ResponseEntity<GameSession>(sessionGame, status);
+	}
+
 }

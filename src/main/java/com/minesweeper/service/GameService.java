@@ -2,6 +2,8 @@ package com.minesweeper.service;
 
 import javax.annotation.PostConstruct;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,7 @@ import com.minesweeper.repository.MinesweeperRepository;
 
 @Service
 public class GameService {
-
+	Logger logger = LoggerFactory.getLogger(GameService.class);
 	private GameBoardHandler boardHandler;
 
 	@Autowired
@@ -38,8 +40,18 @@ public class GameService {
 	};
 
 	public GameSession revealPosition(String gameId, int rowP, int columnP) throws Exception {
+		logger.info("Reveal Position for game on row and column", gameId, rowP, columnP);
 		GameSession gameSession = minesweeperRepository.getSessionGame(gameId);
 		GameBoard board = boardHandler.revealPosition(gameSession.getGameBoard(), rowP, columnP);
+		gameSession.setGameBoard(board);
+		minesweeperRepository.saveSessionGame(gameSession);
+		return gameSession;
+	};
+
+	public GameSession flagSquare(String gameId, int rowP, int columnP) throws Exception {
+		logger.info("FlagSquare for game on row and column", gameId, rowP, columnP);
+		GameSession gameSession = minesweeperRepository.getSessionGame(gameId);
+		GameBoard board = boardHandler.flag(gameSession.getGameBoard(), rowP, columnP);
 		gameSession.setGameBoard(board);
 		minesweeperRepository.saveSessionGame(gameSession);
 		return gameSession;
@@ -50,7 +62,4 @@ public class GameService {
 		return game;
 	}
 
-	public void showSquare(String gameSessionId, int pX, int pY) {
-
-	};
 }

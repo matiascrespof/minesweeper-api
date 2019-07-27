@@ -27,7 +27,7 @@ public class GameBoardHandlerImplTest {
 		for (Square[] sq : gameBoard.getSquares()) {
 			int y = 0;
 			for (Square sq2 : sq) {
-				boolean isABomb =  handler.hasABomb(gameBoard, y,  x);
+				boolean isABomb =  handler.hasABomb(sq2);
 				if (isABomb) {
 					//System.out.println("BOMB FOUND ON array row " + y + " column " + x);
 					bombsFound++;
@@ -47,7 +47,7 @@ public class GameBoardHandlerImplTest {
 		for (Square[] sq : gameBoard.getSquares()) {
 			int y = 0;
 			for (Square sq2 : sq) {
-				boolean isABomb =  handler.hasABomb(gameBoard, y,  x);
+				boolean isABomb =  handler.hasABomb(sq2);
 				if (isABomb) {
 					System.out.println("BOMB FOUND ON array row " + y + " column " + x);
 					bombsFound++;
@@ -67,9 +67,9 @@ public class GameBoardHandlerImplTest {
 		for (Square[] sq : gameBoard.getSquares()) {
 			int y = 0;
 			for (Square sq2 : sq) {
-				boolean isABomb =  handler.hasABomb(gameBoard, y,  x);
+				boolean isABomb =  handler.hasABomb(sq2);
 				if (isABomb) {
-					System.out.println("BOMB FOUND ON array row " + y + " column " + x);
+					System.out.println("BOMB FOUND ON array row " + x + " column " + y);
 					bombsFound++;
 				}
 				y++;

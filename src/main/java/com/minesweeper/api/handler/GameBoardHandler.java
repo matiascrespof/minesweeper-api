@@ -1,6 +1,7 @@
 package com.minesweeper.api.handler;
 
 import com.minesweeper.domain.GameBoard;
+import com.minesweeper.domain.Square;
 
 public interface GameBoardHandler {
 
@@ -23,7 +24,7 @@ public interface GameBoardHandler {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean hasABomb(GameBoard game, int row, int column) throws Exception;
+	public boolean hasABomb(Square square) throws Exception;
 	
 	/**
 	 * Limit the access to discover a bomb for a Game Board
@@ -35,4 +36,15 @@ public interface GameBoardHandler {
 	 * @throws Exception
 	 */
 	public GameBoard revealPosition(GameBoard game, int row, int column) throws Exception;
+	
+	/**
+	 * Flag an Square
+	 * 
+	 * @param game
+	 * @param row
+	 * @param column
+	 * @return
+	 * @throws Exception
+	 */
+	public GameBoard flag(GameBoard game, int row, int column) throws Exception;
 }

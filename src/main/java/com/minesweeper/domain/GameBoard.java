@@ -29,13 +29,13 @@ public class GameBoard {
 	 * 
 	 * @param user
 	 */
-	public GameBoard(int rows, int columns, int nMines) {
+	public GameBoard(int columns, int rows, int nMines) {
 		this.gameStatus = GameStatus.PAUSED.toString();
 		this.startDate = new Date();
 		this.nRows = rows - 1;
 		this.nColumns = columns - 1;
-		this.setSquares(rows, columns);
-		this.initCloseToBombs(rows, columns, nMines);
+		this.setSquares(columns, rows);
+		this.initCloseToBombs(columns, rows, nMines);
 		this.evaluateBombsCloseTo();
 	}
 
@@ -75,6 +75,14 @@ public class GameBoard {
 		this.endGameDate = new Date();
 	}
 
+	public int getnRows() {
+		return nRows;
+	}
+
+	public int getnColumns() {
+		return nColumns;
+	}
+
 	/**
 	 * init default Squares
 	 * 
@@ -82,12 +90,12 @@ public class GameBoard {
 	 * @param rows
 	 * @param nMines
 	 */
-	private void setSquares(int rows, int columns) {
-		squares = new Square[rows][columns];
-		IntStream.range(0, rows).forEach(r -> {
-			IntStream.range(0, columns).forEach(c -> {
+	private void setSquares(int columns, int rows) {
+		squares = new Square[columns][rows];
+		IntStream.range(0, columns).forEach(c -> {
+			IntStream.range(0, rows).forEach(r -> {
 				// setting up bombs as false for now
-				squares[r][c] = new Square(r, c, false);
+				squares[c][r] = new Square(c, r, false);
 			});
 		});
 	}
@@ -99,13 +107,13 @@ public class GameBoard {
 	 * @param rows
 	 * @param nMines
 	 */
-	private void initCloseToBombs(int rows, int columns, int nMines) {
+	private void initCloseToBombs(int columns, int rows, int nMines) {
 		int minesLeft = nMines;
 		Random row = new Random();
-		Random colums = new Random();
+		Random column = new Random();
 		while (minesLeft > 0) {
-			Square squareToSetABomb = squares[row.nextInt(rows)][colums.nextInt(columns)];
-			if (!squareToSetABomb.hasAbomb()) {
+			Square squareToSetABomb = squares[column.nextInt(columns)][row.nextInt(rows)];
+			if (!squareToSetABomb.isHasAbomb()) {
 				squareToSetABomb.setHasAbomb(true);
 				minesLeft--;
 			}
@@ -132,56 +140,53 @@ public class GameBoard {
 		int cp = sq.getcPosition();
 
 		if (rp > 0) {
-			// TODO 1 Evaluate -1, 0
-			if (squares[rp - 1][cp].hasAbomb()) {
+			// 1 Evaluate 0,-1
+			if (squares[cp][rp - 1].isHasAbomb()) {
 				bombsCloseToMe++;
 			}
 		}
-		// TODO 2 Evaluate -1,-1
-		if (cp > 0 && rp > 0) {
-			if (squares[rp - 1][cp - 1].hasAbomb()) {
+		// 2 Evaluate -1,-1
+		if (rp > 0 && cp > 0) {
+			if (squares[cp - 1][rp - 1].isHasAbomb()) {
 				bombsCloseToMe++;
 			}
 		}
-		// TODO 3 Evaluate 0,-1
+		// 3 Evaluate -1,0
 		if (cp > 0) {
-			if (squares[rp][cp - 1].hasAbomb()) {
+			if (squares[cp-1][rp].isHasAbomb()) {
 				bombsCloseToMe++;
 			}
 		}
-		// TODO 4 Evaluate +1,-1
-		if (rp < this.nRows && cp > 0) {
-			if (squares[rp + 1][cp - 1].hasAbomb()) {
+		// 4 Evaluate +1,-1
+		if (cp < this.nColumns && rp > 0) {
+			if (squares[cp + 1][rp - 1].isHasAbomb()) {
 				bombsCloseToMe++;
 			}
 		}
-		// TODO 5 Evaluate +1, 0
-		if (rp < this.nRows) {
-			if (squares[rp + 1][cp].hasAbomb()) {
-				bombsCloseToMe++;
-			}
-		}
-		// TODO 6 Evaluate +1,+1
-		if (rp < this.nRows && cp < this.nColumns) {
-			if (squares[rp + 1][cp + 1].hasAbomb()) {
-				bombsCloseToMe++;
-			}
-		}
-		// TODO 7 Evaluate 0,+1
+		// 5 Evaluate +1, 0
 		if (cp < this.nColumns) {
-			if (squares[rp][cp + 1].hasAbomb()) {
+			if (squares[cp + 1][rp].isHasAbomb()) {
 				bombsCloseToMe++;
 			}
 		}
-		// TODO 8 Evaluate -1,+1
-		if (rp > 0 && cp < this.nColumns) {
-			if (squares[rp - 1][cp + 1].hasAbomb()) {
+		// 6 Evaluate +1,+1
+		if (cp < this.nColumns && rp < this.nRows) {
+			if (squares[cp + 1][rp + 1].isHasAbomb()) {
+				bombsCloseToMe++;
+			}
+		}
+		// 7 Evaluate 0,+1
+		if (rp < this.nRows) {
+			if (squares[cp][rp + 1].isHasAbomb()) {
+				bombsCloseToMe++;
+			}
+		}
+		// 8 Evaluate -1,+1
+		if (cp > 0 && rp < this.nRows) {
+			if (squares[cp - 1][rp + 1].isHasAbomb()) {
 				bombsCloseToMe++;
 			}
 		}
 		sq.setBombsCloseTo(bombsCloseToMe);
-		System.out.println(
-				"Bombs Close to Me for Row: " + rp + " Column: " + cp + " Number of Bombs:" + sq.getBombsCloseTo());
-
 	}
 }
