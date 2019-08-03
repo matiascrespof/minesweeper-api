@@ -14,10 +14,9 @@ public class MinesweeperServiceApplication extends SpringBootServletInitializer 
 	public static void main(String[] args) {
 		SpringApplication.run(MinesweeperServiceApplication.class, args);
 	}
-	
-	@Bean
-    public MinesweeperRepository minesweeperRepository() {
-        return new MinesweeperRepositoryImpl();
-    }
 
+	@Bean
+	public MinesweeperRepository minesweeperRepository() {
+		return new MinesweeperRepositoryImpl();
+	}
 }

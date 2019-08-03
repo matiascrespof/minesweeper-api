@@ -101,6 +101,7 @@ public class GameBoardHandlerImpl implements GameBoardHandler {
 			Square square = game.getSquares()[column][row];
 			//if row is marked do not evalue the status and try to open it
 			if(square.isMarked()) {
+				logger.warn("it is already flagged!");
 				return game;
 			}
 			startGameAndCheckStatus(game);
@@ -126,7 +127,7 @@ public class GameBoardHandlerImpl implements GameBoardHandler {
 			startGameAndCheckStatus(game);
 			// First check if has a Bomb
 			Square square = game.getSquares()[column][row];
-			square.setMarked(true);
+			square.setMarked(!square.isMarked());
 		} catch (Exception ex) {
 			throw ex;
 		}
